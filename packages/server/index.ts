@@ -20,15 +20,19 @@ app.get('/api/hello', (req: Request, res: Response) => {
    res.json({ message: 'Hello World!' });
 });
 
+const conversations = new Map<string, string>();
+
 app.post('/api/chat', async (req: Request, res: Response) => {
-   const { prompt } = req.body;
+   const { prompt, conversationId } = req.body;
 
    const response = await client.responses.create({
       model: 'gpt-5-nano',
       input: prompt,
-      temperature: 0.5,
-      max_output_tokens: 100,
+      reasoning: null,
+      previous_response_id: conversations.get(conversationId) || undefined,
    });
+
+   conversations.set(conversationId, response.id);
 
    res.json({ message: response.output_text });
 });
