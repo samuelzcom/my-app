@@ -41,16 +41,20 @@ app.post('/api/chat', async (req: Request, res: Response) => {
 
    const { prompt, conversationId } = req.body;
 
-   const response = await client.responses.create({
-      model: 'gpt-5-nano',
-      input: prompt,
-      reasoning: null,
-      previous_response_id: conversations.get(conversationId) || undefined,
-   });
+   try {
+      const response = await client.responses.create({
+         model: 'gpt-5-nano!',
+         input: prompt,
+         reasoning: null,
+         previous_response_id: conversations.get(conversationId) || undefined,
+      });
 
-   conversations.set(conversationId, response.id);
+      conversations.set(conversationId, response.id);
 
-   res.json({ message: response.output_text });
+      res.json({ message: response.output_text });
+   } catch (error) {
+      res.status(500).json({ error: 'Failed to generate a response.' });
+   }
 });
 
 app.listen(port, () => {
