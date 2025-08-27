@@ -45,7 +45,7 @@ const Chatbot = () => {
       <div>
          <div className="flex flex-col gap-3 mb-10">
             {messages.map((message, index) => (
-               <p
+               <div
                   key={index}
                   className={`px-3 py-1 rounded-xl ${
                      message.role === 'user'
@@ -54,7 +54,7 @@ const Chatbot = () => {
                   }`}
                >
                   <ReactMarkdown>{message.content}</ReactMarkdown>
-               </p>
+               </div>
             ))}
          </div>
          <form
