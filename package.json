@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "wonder-world-chatbot",
   "module": "index.ts",
   "type": "module",
   "private": true,
